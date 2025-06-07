@@ -1,0 +1,391 @@
+/* Dark theme styles for Adfundum Meter */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 2px solid #e53e3e;
+  margin-bottom: 30px;
+}
+
+.logo,
+.mascot {
+  height: 120px;
+  width: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.header h1 {
+  font-size: 2.5em;
+  color: #e53e3e;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* Main content layout */
+.main-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.game-section {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Name form styles */
+.name-form {
+  background: rgba(45, 45, 45, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.name-form h2 {
+  margin-bottom: 20px;
+  color: #e53e3e;
+}
+
+#playerName {
+  padding: 12px 20px;
+  font-size: 1.2em;
+  border: 2px solid #e53e3e;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: white;
+  margin-right: 15px;
+  min-width: 200px;
+}
+
+#playerName:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(229, 62, 62, 0.5);
+}
+
+/* Button styles */
+button {
+  padding: 12px 24px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+#submitName,
+.start-btn {
+  background: #e53e3e;
+  color: white;
+}
+
+#submitName:hover,
+.start-btn:hover {
+  background: #c53030;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.4);
+}
+
+.reset-btn,
+.clear-btn {
+  background: #4a5568;
+  color: white;
+  margin-left: 10px;
+}
+
+.reset-btn:hover,
+.clear-btn:hover {
+  background: #2d3748;
+}
+
+#enableWebcam {
+  background: #38a169;
+  color: white;
+}
+
+#enableWebcam:hover {
+  background: #2f855a;
+}
+
+/* Game area styles */
+.game-area {
+  background: rgba(45, 45, 45, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.player-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.player-info h2 {
+  color: #e53e3e;
+}
+
+.game-controls {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.timer-display {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.timer-display h3 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #90cdf4;
+}
+
+#timer {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 1.3em;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.status.waiting {
+  background: rgba(56, 161, 105, 0.2);
+  color: #68d391;
+}
+
+.status.recording {
+  background: rgba(229, 62, 62, 0.2);
+  color: #fc8181;
+  animation: pulse 1s infinite;
+}
+
+.status.finished {
+  background: rgba(144, 205, 244, 0.2);
+  color: #90cdf4;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Webcam styles */
+.webcam-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#webcam {
+  width: 100%;
+  max-width: 400px;
+  height: 300px;
+  border-radius: 8px;
+  background: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.webcam-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.recording-status {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #e53e3e;
+  animation: pulse 1s infinite;
+}
+
+/* Scoreboard styles */
+.scoreboard {
+  background: rgba(45, 45, 45, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 350px;
+  flex-shrink: 0;
+}
+
+.scoreboard h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #e53e3e;
+}
+
+.scores-list {
+  max-height: 600px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.score-item {
+  background: rgba(26, 26, 26, 0.6);
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #e53e3e;
+  position: relative;
+}
+
+.score-info {
+  flex: 1;
+}
+
+.score-name {
+  font-weight: bold;
+  color: #90cdf4;
+}
+
+.score-time {
+  color: #e53e3e;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0 15px;
+}
+
+.score-date {
+  font-size: 0.9em;
+  color: #a0aec0;
+}
+
+.delete-score-btn {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-score-btn:hover {
+  background: #c53030;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.4);
+}
+
+.clear-btn {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Footer styles */
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(229, 62, 62, 0.3);
+}
+
+.footer p {
+  font-size: 0.85em;
+  color: #a0aec0;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .scoreboard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .header h1 {
+    font-size: 2em;
+  }
+
+  .logo,
+  .mascot {
+    height: 80px;
+  }
+
+  #playerName {
+    margin-right: 0;
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+  }
+
+  .webcam-controls {
+    flex-direction: column;
+  }
+
+  .score-item {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .score-info,
+  .score-time {
+    margin: 0;
+  }
+
+  .delete-score-btn {
+    margin-top: 10px;
+  }
+}
