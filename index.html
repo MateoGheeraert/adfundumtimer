@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adfundum Meter - KLJ Merkem</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header with logos -->
+      <header class="header">
+        <img src="images/logo.png" alt="KLJ Merkem Logo" class="logo" />
+        <h1>Adfundum Meter</h1>
+        <img
+          src="images/dollekoeZonderAchtergrond.png"
+          alt="Dollekoe"
+          class="mascot"
+        />
+      </header>
+
+      <!-- Main content area with game and scoreboard side by side -->
+      <div class="main-content">
+        <!-- Left side - Game area -->
+        <div class="game-section">
+          <!-- Player name form -->
+          <div id="nameForm" class="name-form">
+            <h2>Voer je naam in</h2>
+            <input
+              type="text"
+              id="playerName"
+              placeholder="Je naam..."
+              maxlength="20"
+            />
+            <button id="submitName">Start Spel</button>
+          </div>
+          <!-- Game area -->
+          <div id="gameArea" class="game-area hidden">
+            <div class="player-info">
+              <h2>Speler: <span id="currentPlayer"></span></h2>
+            </div>
+
+            <div class="game-controls">
+              <button id="startGame" class="start-btn">Start Adfundum!</button>
+              <button id="resetGame" class="reset-btn">Reset</button>
+            </div>
+
+            <div class="timer-display">
+              <h3>Tijd: <span id="timer">0.00</span>s</h3>
+              <div id="status" class="status">
+                Begin met drinken wanneer je klaar bent!
+              </div>
+            </div>
+
+            <!-- Webcam section -->
+            <div class="webcam-section">
+              <video id="webcam" autoplay muted></video>
+              <div class="webcam-controls">
+                <button id="enableWebcam">Webcam Inschakelen</button>
+                <div id="recordingStatus" class="recording-status hidden">
+                  🔴 Opnemen
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right side - Scoreboard -->
+        <div class="scoreboard">
+          <h2>Scorebord</h2>
+          <div id="scoresList" class="scores-list">
+            <p>Nog geen scores!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>ad fundum meter by KLJ Merkem</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
