@@ -250,7 +250,6 @@ class AdfundumMeter {
 
     console.log(`Recording downloaded as: ${filename}`);
   }
-
   saveScore() {
     if (!this.startTime || !this.endTime) return;
 
@@ -264,12 +263,11 @@ class AdfundumMeter {
     scores.push(score);
     scores.sort((a, b) => a.time - b.time); // Sort by shortest time first (best scores)
 
-    sessionStorage.setItem("adfundumScores", JSON.stringify(scores));
+    localStorage.setItem("adfundumScores", JSON.stringify(scores));
     this.displayScores();
   }
-
   getScores() {
-    const scores = sessionStorage.getItem("adfundumScores");
+    const scores = localStorage.getItem("adfundumScores");
     return scores ? JSON.parse(scores) : [];
   }
 
@@ -300,12 +298,11 @@ class AdfundumMeter {
       .join("");
 
     this.scoresList.innerHTML = scoresHTML;
-  }
-  deleteScore(index) {
+  }  deleteScore(index) {
     if (confirm("Weet je zeker dat je deze score wilt verwijderen?")) {
       let scores = this.getScores();
       scores.splice(index, 1);
-      sessionStorage.setItem("adfundumScores", JSON.stringify(scores));
+      localStorage.setItem("adfundumScores", JSON.stringify(scores));
       this.displayScores();
     }
   }
