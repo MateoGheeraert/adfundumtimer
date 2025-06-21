@@ -2,7 +2,7 @@
 class AdfundumMeter {
   constructor() {
     this.isGameActive = false;
-    this.isKeyPressed = false;
+    this.isTimerRunning = false;
     this.startTime = null;
     this.endTime = null;
     this.timerInterval = null;
@@ -47,9 +47,7 @@ class AdfundumMeter {
 
     // Game controls
     this.startGameBtn.addEventListener("click", () => this.startGame());
-    this.resetGameBtn.addEventListener("click", () => this.resetGame());
-
-    // Key events for "8" key
+    this.resetGameBtn.addEventListener("click", () => this.resetGame()); // Key events for "8" key (sensor) and Space key (stop)
     document.addEventListener("keydown", (e) => this.handleKeyDown(e));
     document.addEventListener("keyup", (e) => this.handleKeyUp(e));
     // Webcam
@@ -77,14 +75,14 @@ class AdfundumMeter {
     // Focus on the document to capture key events
     document.body.focus();
   }
-
   startGame() {
     this.isGameActive = true;
-    this.isKeyPressed = false;
+    this.isTimerRunning = false;
     this.startTime = null;
     this.endTime = null;
     this.startGameBtn.disabled = true;
-    this.statusDisplay.textContent = "Begin met drinken om de tijd te starten!";
+    this.statusDisplay.textContent =
+      "Plaats je beker op de sensor, til dan op om te beginnen!";
     this.statusDisplay.className = "status waiting";
     this.timerDisplay.textContent = "0.00";
 
@@ -93,7 +91,7 @@ class AdfundumMeter {
   }
   resetGame() {
     this.isGameActive = false;
-    this.isKeyPressed = false;
+    this.isTimerRunning = false;
     this.startTime = null;
     this.endTime = null;
     this.currentPlayer = "";
@@ -124,48 +122,75 @@ class AdfundumMeter {
     // Focus on name input
     this.playerNameInput.focus();
   }
-
   handleKeyDown(e) {
-    // Only respond to "8" key
-    if (e.key !== "8" && e.code !== "Digit8") return;
+    // Handle "8" key (sensor) - this means cup is ON the sensor
+    if (e.key === "8" || e.code === "Digit8") {
+      e.preventDefault();
 
-    e.preventDefault();
+      if (!this.isGameActive) return;
 
-    if (!this.isGameActive || this.isKeyPressed) return;
-    this.isKeyPressed = true;
+      if (this.isTimerRunning) {
+        // Cup is back on sensor - STOP timing (end of drinking session)
+        this.endDrinking();
+      }
+      // If timer is not running, this means cup is in starting position - we wait for keyup (lift)
+      return;
+    }
+
+    // Handle Space key for manual reset if needed
+    if (e.code === "Space") {
+      e.preventDefault();
+      return;
+    }
+  }
+
+  handleKeyUp(e) {
+    // Handle "8" key release - this means cup is OFF the sensor (START drinking!)
+    if (e.key === "8" || e.code === "Digit8") {
+      e.preventDefault();
+
+      if (!this.isGameActive || this.isTimerRunning) return;
+
+      // Cup is lifted off sensor - START timing
+      this.startDrinking();
+      return;
+    }
+
+    if (e.code === "Space") {
+      e.preventDefault();
+    }
+  }
+
+  startDrinking() {
+    this.isTimerRunning = true;
     this.startTime = Date.now();
-
-    this.statusDisplay.textContent = "Aan het timen... Blijf drinken!";
+    this.statusDisplay.textContent =
+      "Timer loopt! Aan het drinken... Plaats beker terug om te stoppen.";
     this.statusDisplay.className = "status recording";
-
     this.startTimer();
     this.startRecording();
   }
 
-  handleKeyUp(e) {
-    // Only respond to "8" key
-    if (e.key !== "8" && e.code !== "Digit8") return;
+  endDrinking() {
+    if (!this.isTimerRunning) return;
 
-    e.preventDefault();
-
-    if (!this.isGameActive || !this.isKeyPressed) return;    this.isKeyPressed = false;
+    this.isTimerRunning = false;
     this.endTime = Date.now();
 
     this.stopTimer();
     this.stopRecording();
-    
+
     const duration = ((this.endTime - this.startTime) / 1000).toFixed(2);
     // Update timer display to show exact final time
     this.timerDisplay.textContent = duration;
-    this.statusDisplay.textContent = `Klaar! Tijd: ${duration}s`;
+    this.statusDisplay.textContent = `Klaar! Drink tijd: ${duration}s`;
     this.statusDisplay.className = "status finished";
-    
+
     this.saveScore();
 
     this.isGameActive = false;
     this.startGameBtn.disabled = false;
   }
-
   startTimer() {
     this.timerInterval = setInterval(() => {
       if (this.startTime) {
@@ -261,7 +286,7 @@ class AdfundumMeter {
     };
     let scores = this.getScores();
     scores.push(score);
-    scores.sort((a, b) => a.time - b.time); // Sort by shortest time first (best scores)
+    scores.sort((a, b) => b.time - a.time); // Sort by longest time first (best scores for drinking time)
 
     localStorage.setItem("adfundumScores", JSON.stringify(scores));
     this.displayScores();
@@ -298,7 +323,8 @@ class AdfundumMeter {
       .join("");
 
     this.scoresList.innerHTML = scoresHTML;
-  }  deleteScore(index) {
+  }
+  deleteScore(index) {
     if (confirm("Weet je zeker dat je deze score wilt verwijderen?")) {
       let scores = this.getScores();
       scores.splice(index, 1);

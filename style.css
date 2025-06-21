@@ -193,6 +193,12 @@ button {
   animation: pulse 1s infinite;
 }
 
+.status.paused {
+  background: rgba(237, 137, 54, 0.2);
+  color: #f6ad55;
+  animation: blink 2s infinite;
+}
+
 .status.finished {
   background: rgba(144, 205, 244, 0.2);
   color: #90cdf4;
@@ -205,6 +211,17 @@ button {
   }
   50% {
     opacity: 0.6;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0.3;
   }
 }
 
