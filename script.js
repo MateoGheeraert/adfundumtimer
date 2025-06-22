@@ -1,4 +1,30 @@
 // Adfundum Meter JavaScript
+
+// Congratulations messages configuration
+const CONGRATULATIONS_MESSAGES = {
+  firstPlace: [
+    "🏆 Da was gene pint, da was kunst! Je ziet de kampioen van 't zupn!",
+    "🥇 Je trek et bin alsof dat water is.",
+    "👑 De rest peist verzeekn da ze ni kunnen zuipen!",
+    "🎉 Godver en zat niet in zeekn?",
+    "⭐ Joaj teh da goan der nie veel achter doen!",
+  ],
+  goodTime: [
+    "👍 Da ging vlot binnen, mo tku ossan zidder he!",
+    "💪 Je ziet lik nen halve alocholieker",
+    "🔥 Da brandt goe, maar ge leeft nog, dus 't kan beter!",
+    "👏 Oe lang goa je lever da nog vul houden?",
+    "✨ Da was goed, je meug et zo te zien!",
+  ],
+  badTime: [
+    "🤔 Tis een adfundum meter he!, je moet nie op je gemak drinken!",
+    "💭 En me oma trekt nog zidder eur pinte bin!",
+    "🎯 Tis thoopn vo jou da er da niemand ge zien et!",
+    "📈 Je goat ogliek nog een bitje moeten trainen wi, kzo een bitje meer uitgaan ak jou waren!",
+    "🚀 Ja, nie veel over te zeggen he! Amateur!",
+  ],
+};
+
 class AdfundumMeter {
   constructor() {
     this.isGameActive = false;
@@ -170,7 +196,6 @@ class AdfundumMeter {
     this.startTimer();
     this.startRecording();
   }
-
   endDrinking() {
     if (!this.isTimerRunning) return;
 
@@ -188,8 +213,62 @@ class AdfundumMeter {
 
     this.saveScore();
 
+    // Show congratulations popup after a short delay
+    setTimeout(() => {
+      this.showCongratulations(parseFloat(duration));
+    }, 500);
+
     this.isGameActive = false;
     this.startGameBtn.disabled = false;
+  }
+
+  showCongratulations(duration) {
+    const scores = this.getScores();
+    const isFirstPlace = scores.length > 0 && scores[0].time === duration;
+    const isGoodTime = duration < 3;
+
+    let messageCategory;
+    if (isFirstPlace) {
+      messageCategory = "firstPlace";
+    } else if (isGoodTime) {
+      messageCategory = "goodTime";
+    } else {
+      messageCategory = "badTime";
+    }
+
+    const messages = CONGRATULATIONS_MESSAGES[messageCategory];
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+    this.displayCongratulationsPopup(randomMessage);
+  }
+
+  displayCongratulationsPopup(message) {
+    // Create popup element
+    const popup = document.createElement("div");
+    popup.className = "congratulations-popup";
+    popup.innerHTML = `
+      <div class="congratulations-content">
+        <p>${message}</p>
+      </div>
+    `;
+
+    // Add to body
+    document.body.appendChild(popup);
+
+    // Show with animation
+    setTimeout(() => {
+      popup.classList.add("show");
+    }, 10);
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+      popup.classList.remove("show");
+      setTimeout(() => {
+        if (popup.parentNode) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
+    }, 3000);
   }
   startTimer() {
     this.timerInterval = setInterval(() => {
@@ -274,7 +353,8 @@ class AdfundumMeter {
     URL.revokeObjectURL(url);
 
     console.log(`Recording downloaded as: ${filename}`);
-  }  saveScore() {
+  }
+  saveScore() {
     if (!this.startTime || !this.endTime) return;
 
     const duration = ((this.endTime - this.startTime) / 1000).toFixed(2);
@@ -282,7 +362,8 @@ class AdfundumMeter {
       name: this.currentPlayer,
       time: parseFloat(duration),
       date: new Date().toLocaleString(),
-    };    let scores = this.getScores();
+    };
+    let scores = this.getScores();
     scores.push(score);
     scores.sort((a, b) => a.time - b.time); // Sort by shortest time first (lowest time first as requested)
 
