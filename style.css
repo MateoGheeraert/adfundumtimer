@@ -14,8 +14,9 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* Header styles */
@@ -260,7 +261,7 @@ button {
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  width: 350px;
+  width: 400px;
   flex-shrink: 0;
 }
 
@@ -279,13 +280,19 @@ button {
 .score-item {
   background: rgba(26, 26, 26, 0.6);
   margin: 10px 0;
-  padding: 15px;
+  padding: 20px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-left: 4px solid #e53e3e;
   position: relative;
+  transition: all 0.3s ease;
+}
+
+.score-item:hover {
+  background: rgba(26, 26, 26, 0.8);
+  transform: translateX(2px);
 }
 
 .score-info {
@@ -295,29 +302,31 @@ button {
 .score-name {
   font-weight: bold;
   color: #90cdf4;
+  font-size: 1.3em;
+  margin-bottom: 5px;
 }
 
 .score-time {
   color: #e53e3e;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
   margin: 0 15px;
 }
 
 .score-date {
-  font-size: 0.9em;
+  font-size: 1em;
   color: #a0aec0;
 }
 
 .delete-score-btn {
-  background: #e53e3e;
-  color: white;
+  background: transparent;
+  color: transparent;
   border: none;
   border-radius: 6px;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   line-height: 1;
   transition: all 0.3s ease;
@@ -325,13 +334,20 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+}
+
+.score-item:hover .delete-score-btn {
+  opacity: 1;
+  background: #e53e3e;
+  color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .delete-score-btn:hover {
-  background: #c53030;
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.4);
+  background: #c53030 !important;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.4) !important;
 }
 
 .clear-btn {
@@ -355,17 +371,23 @@ button {
 }
 
 /* Responsive design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .main-content {
     flex-direction: column;
   }
 
   .scoreboard {
     width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
   .header {
     flex-direction: column;
     gap: 15px;
@@ -393,8 +415,9 @@ button {
 
   .score-item {
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     text-align: center;
+    padding: 15px;
   }
 
   .score-info,
@@ -402,7 +425,18 @@ button {
     margin: 0;
   }
 
+  .score-name {
+    font-size: 1.2em;
+  }
+
+  .score-time {
+    font-size: 1.3em;
+  }
+
   .delete-score-btn {
     margin-top: 10px;
+    opacity: 1;
+    background: #e53e3e;
+    color: white;
   }
 }

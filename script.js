@@ -274,8 +274,7 @@ class AdfundumMeter {
     URL.revokeObjectURL(url);
 
     console.log(`Recording downloaded as: ${filename}`);
-  }
-  saveScore() {
+  }  saveScore() {
     if (!this.startTime || !this.endTime) return;
 
     const duration = ((this.endTime - this.startTime) / 1000).toFixed(2);
@@ -283,10 +282,9 @@ class AdfundumMeter {
       name: this.currentPlayer,
       time: parseFloat(duration),
       date: new Date().toLocaleString(),
-    };
-    let scores = this.getScores();
+    };    let scores = this.getScores();
     scores.push(score);
-    scores.sort((a, b) => b.time - a.time); // Sort by longest time first (best scores for drinking time)
+    scores.sort((a, b) => a.time - b.time); // Sort by shortest time first (lowest time first as requested)
 
     localStorage.setItem("adfundumScores", JSON.stringify(scores));
     this.displayScores();
